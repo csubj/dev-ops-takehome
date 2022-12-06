@@ -9,13 +9,13 @@ On the Blessed path:
 No bells and whistles: 
 1. install bazel for your platform 
 1. install AndroidSDK
-1. install Swift Xcode for your environment (hopefully you're on a mac)
+1. install Swift/Apple tooling for your environment (hopefully you're not on windows?)
 1. bazel build <TARGET>
 
-# How the Sausage is made
+# How the sausage is made
 
 ## High-level 
-General structure is this: I'm using Docker containers to establish the dev environment, this environment has the Android SDK and Apple Swift developer tools installed. We copy our various resources into this container and mount the directory when we run the image in interactive mode.
+From 10,000 ft: I'm using Docker containers to establish the dev environment, this environment has the Android SDK and Apple Swift developer tools installed. We copy our various resources into this container and mount the directory when we run the image in interactive mode.
 
 Now we have a method to build our binaries in a platform and environment agnostic style which is great for a consistent and automated CI/CD.
 
@@ -28,9 +28,9 @@ This is not the best possible form for a enterprise environment, an improvement 
 - Clean up image build; installs probably too many deps and could be much leaner. 
 - Commit Image with resources already pre-installed for devs to have so that on rebuild that we dont always rebuild from scratch
 - Push image to private company image repo 
-- Setup the bazel build farm for improved build times and build caching 
+- Setup a bazel build farm for improved build times and build caching 
 - Figure out all the various warnings :/ 
 - Fix builds entirely. woof. 
 - Migrate to per-lib BUILD file, instead of per-project. This will give more granularity around targets and importing code across a monorepo 
-- Clean up workspace file
-- Improve Dockerfile definition, probably do a bit less copy paste. 
+- Clean up workspace file or layout in a way that can be maintained easier. 
+- ensure that working builds dont commit compiled assets to the repo via .gitignore
